@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="hello" template="/template/layout.jsp">
+		<put-attribute name="title" value="[layout master page]" />
+		<put-attribute name="header" value="/template/header.jsp" />
+		<put-attribute name="menu" value="/template/menu.jsp" />
+		<put-attribute name="body" value="/hello_body.jsp" />
+		<put-attribute name="footer" value="/template/footer.jsp" />
+		
+	</definition>
+
+
+<!-- put-attribute 파일들을 사용할때 나는 레이아웃 페이지가 layout.jsp이다.
+    여기 페이지에다 title, header, menu...를 디자인하겠다.   여기서 나중에 body만 바꿔 끼워줌-->
+
+
+<!--  !!!!!!!!!! 문제점
+ 	위와같은 구성이라면, 만약 컨텐츠가 100개 page라면
+ 	1.jsp, 2.jsp >>> body value="1.jsp"
+ 	             >>> body value="2.jsp"
+ 	             
+ 	 <put-attribute name="body" value="/1.jsp" />
+ 	             
+ 	             즉, body만큼 만들어줘야함. body가 100개라면? definition정의 파일이 100개   
+ -->
+ 
+ 	<definition name="itworld.base" template="/template/layout.jsp">
+		<put-attribute name="title" value="itworld" />
+		<put-attribute name="header" value="/template/header.jsp" />
+		<put-attribute name="menu" value="/template/menu.jsp" />
+		<put-attribute name="body" value="/hello_body.jsp" />
+		<put-attribute name="footer" value="/template/footer.jsp" />
+	</definition>
+ 
+ <!-- 상속개념 -->
+  
+  <definition name="itworldsub" extends="itworld.base">
+  		<put-attribute name="title" value="subworld" />
+  </definition>
+  </tiles-definitions> 
+ 

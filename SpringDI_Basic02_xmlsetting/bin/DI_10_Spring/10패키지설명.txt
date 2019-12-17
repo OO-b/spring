@@ -1,0 +1,4 @@
+property 를 xml에서 어떻게 만들지를 봄 
+
+
+LIST/MAP/PROPERTY element 많이 사용 - java에서 제공하는 API

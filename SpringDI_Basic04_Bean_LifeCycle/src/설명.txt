@@ -1,0 +1,9 @@
+초기화 함수 
+소멸자 함수 
+client > ApplicationContext.xml       : InitializingBean , DisposableBean 로 afterPropertiesSet(),destroy() 를 쓰거나 
+client2 > ApplicationContext2.xml     : 함수를 임의적으로 만들어서 사용하거나 
+
+
+
+Container가 객체의 라이프 사이클을 관리 함 
+초기화 ~~~~~~~~~~~ 소멸자  까지 

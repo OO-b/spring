@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--  
+	   Spring Was처럼 자신만의 '컨테이너(스프링 전용 메모리 공간)'를 제공( called : IOC )
+	       이 안에 '객체를 만들고, 조립 (관계를 맺게해서 의존성을 줌) 설정 
+	       
+	       > DIConfig.xml 문서를 read해서 안에있는 코드를 먼저 실행 
+	       > xml 파일은 컨테이너를 구성하는 객체를 생성하고, 의존을 설정하는 파일 
+	       
+	         -  xml 파일은 프로그래밍 시작되면 제일먼저 읽어짐 . 컨테이너가 만들어지면 객체를 컨테이너 위에 올려놓아야하는데, 그 안에 관계는 xml이 함. 즉 관계의 근거가 됨 ( like 환경설정 파일)
+	             
+	                    또는  Annotation 통해서 컨테이너 자원 구성
+	                    
+	        : 제어의 역전 ( 프로그램의 제어구조를 바꾼다.)
+	        : 작은 단위의 부품을 만들어 놓고, 그것을 조립하는 행위 (레고블럭 만드는것 처럼)
+	        
+	        
+	        
+	    MyBean mybean = new MyBean();
+		MyBean mybean2 = new MyBean("hong");
+	
+		Singleton single = Singleton.getInstance();   //new X / static에 있는거 갖다 씀
+		Singleton single2 = Singleton.getInstance(); 	
+
+	               싱글톤은 뉴를 하느게 아니라 함수를 호출하면서 쓰는것 , but bean은 뉴를 해주는 것 어떻게할까요?
+-->
+	<bean id="mybean" class="DI_05_Spring.MyBean"></bean>
+	<bean id="mybean2" class="DI_05_Spring.MyBean">
+		<constructor-arg value="hong" />
+	</bean>
+	
+	<bean id="single" class="DI_05_Spring.Singleton" factory-method="getInstance"></bean>
+	<!-- factory-method : bean을 만들때 함수를 호출해서 만듦. -->
+
+
+	<!--  Singleton single = Singleton.getInstance();  
+		   xml 버전 
+		   3.x.x 버전 : factory-method="getInstance" 
+		   4.x.x~5.x.x 버전 : 굳이 부르지 않아도 알아서 싱글톤 클래스면 (생성자가 private으로 막혀져있으면) 알아서 factory-method 호출. 생략가능
+	-->
+</beans>

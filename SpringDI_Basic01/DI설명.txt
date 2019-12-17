@@ -1,0 +1,148 @@
+DI개념_1 : 의존성 주입 (의존객체 주입)
+
+수많은 클래스 존재 - 클래스끼리 관계가 존재 
+관계는 크게 1. 상속(is ~a) 2. 포함 (has ~ a) 
+
+A라는 클래는 B라는 클래스가 필요하다. (필요해서 사용하는 방법 = 상속 / 포함)
+
+//나는 네가 필요해 인 상황일때 이렇게 3가지로 나타나야함 
+1.--------
+class A extends B{}
+
+2.--------
+class A {
+ B b = new B();}  // 포함  : a클래스 안에서 b라는 클래스를 멤버필더로 씀 (복합연관. A를 안만들면 B가 만들어지지 않음 : 라이프 사이클을 함께함)
+
+3.--------
+class A {
+	B b;
+	A(B b){ //의존을 생성자를 통해서 (주소값받기)
+	this.b = b;
+	
+	// 파라미터로 받은걸 멤버필더로 넘기니까. 집합연관 (파라미터로 넘기는것만 보면 dependency = 의존) 
+	}
+}
+
+class A {  -- 이건 포함관계이지만, 순수한 dependency
+	public B print(B b){//의존을 함수를 통해서(주소값받기)
+	return b;
+	}
+}
+
+newRecordView 클래스가 newRecord에 의존한다. 
+newRecordView 클래스가 필요한 객체를 [생성자]통해서 주입 
+두 객체의 lifecycle은 같다. 
+*오류 : DI는 Spring 에서만 존재하는 개념이 절~~~대 아니다. 
+
+result : 필요한 객체는 [생성자]를 통해서 주입(또는 생성) 사용가능하다. => 의존관계(복합연관)
+
+
+-------------------------------------------------------------------------
+	//1. [생성자]를 통해서 필요한 객체를 생성하거나 주입(Constructor injection) > DI
+	//2. 함수([setter]) 를 통해서 필요한 객체를 주입 (Setter injection)>> DI2   -- 더 유연해요. 
+	즉, spring은요. setter로 하는걸 더 좋아해요. 
+
+---------------------------------------------------------------------
+DI개념 _2 : 의존성 주입 (의존 객체 주입)
+- NewRecordView 크래스는 필요한 객체를 setter 함수를 통해서 주입 받아서 사용하고 있다. 
+- 객체의 생성이 서로 독립적이다 > 필요시에 객체를 주입 
+- 두 객체의 lifecycle은 같지 않다. > 의존 > 집합연관
+
+----------------------------------------------------------------------
+
+시나리오 
+Class A, Class B
+[A라는 클래스가 B라는 클래스를 사용하는 방법]
+
+1. 상속 (is ~a) > Spring Framework 관심이 없어요.
+2. 포함(has ~a)
+
+     2.1 : [생성자]를 통해서 (constructor injection)    -- 의무적으로 사용 *
+         > A a = new A();
+         
+         > Class A {
+        			B b;
+        			public A(){
+        			b = new B();
+         	}
+         }
+         
+         > A라는 클래스의 [생성자]에서 B라는 객체 생성사용(복합연관)
+         
+         
+     2.2 : 함수(setter) (setter injection)         -- 필요에따라 사용 *
+         > A a = new A();
+         > B b = new B();
+         > a.SetB(b);
+         
+                  > Class A {
+        			    private B b;
+        		     	public void SetB(B b ){
+        			    this.b = b;
+         	}
+         }
+         
+         
+두개의 클래스가 있을때 어떤 하나의 클래스에서 다른 클래스를 필요로 한다면,
+
+생성자 주입/ setter주입 
+> 멤버필드가 있다는 전제하에서 시작. 
+그렇지 않으면 정말 dependency가 됨 
+
+
+Result : SpringFrameWork은 다른 객체 참조(의존) 하기 위해서
+         [constructor injection] , [setter injection] 사용
+         => DI (Dependency injection)
+         
+         
+ + Interface 까지 포함 되면 (금상첨화)  > 다형성 확보 > 느슨한 구조         
+
+DI3 + interface 까지 포함된 코드 
+
+
+정리)
+순수한 JAVA 코드로  DI(의존성 주입)
+
+1. 생성자를 통해서 (Constructor Injection) : 의무적인  ...
+2. setter 함수 통해서 (setter Injection) : 필요에 따라서 ...
+3. 다형성 (인터페이스) 활용 ...... (생성자, setter 둘다 해당)
+
+===================================================
+Spring FrameWork 사용 
+
+1. Spring.IO 사이트 방문
+   1.1 http://projects.spring.io/spring-framework/
+   1.2 사용하려는 framework version 확인
+   1.3 Maven : 주소 복사 해서 https://mvnrepository.com/ 사이트
+   1.4 local 저장소에 다운받는 것이 원칙
+
+   -Spring 사이트 다운로드
+   http://projects.spring.io/spring-framework/
+   http://maven.springframework.org/release/org/springframework/spring/
+
+
+
+
+2. 우리는 전체적인 이해를 위해서 직접 파일 다운로드
+   2.1 프로젝트에 첨부(참조) 하는 방식
+   2.2. SpringFramework 4.2.5 버전 다운로드
+   2.3  SpringFramework 가 의존하는 클래스를 담고 있는 
+        spring-framework-3.0.2.RELEASE-dependencies 다운로드
+        
+3. SpringFramework 핵심 엔진(lib)
+   core , context , beans , expression (핵심)   
+   jar 파일 참조 추가
+   
+4. POINT
+4.1 xml 파일 설정    
+4.2 annotation 설정 (권장)   
+
+result :
+객체의 생성과 조립 > xml 설정  파일을 통해서
+
+
+기존:
+main
+Emp e = new Emp(); 하는 작업을 ... 설정(xml, annotation)
+
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context.xsd">
+	   
+	   <!-- xml 파일
+	   IOC 컨테이너 안에 적재될 bean객체를 생성하고 injection(DI)
+	   
+	   <bean id="emp"
+	   <bean name="emp,emp2,emp3"...
+	   
+	   id속성, name 는 객체의 이름 (식별자)
+	   
+	   but, web(Spring MVC)으로 넘어오면서 id, name가 mapping 주소로 변경됨 ★★★★
+	   id, name => url_pattern과 연결됨 
+	   
+	   <bean id="/hello.html" class="BoardController">
+	   id="/hello.htm"  >> mapping 주소 (즉, 어떤 컨트롤러를 실행할지)
+	   
+	   
+	컴파일을 실행한다는건 : new해서 메모리에 올린다는 뜻
+	    -->
+	    
+	    <bean id="/hello.htm" class="kr.or.bit.HelloController"></bean>
+	    <bean id="/intro.htm" class="kr.or.bit.IntroController"></bean>
+
+	    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    	<property name="prefix">
+	    		<value>/WEB-INF/views/</value>
+	    	</property>
+	    	<property name="suffix">
+	    		<value>.jsp</value>
+	    	</property>
+	    </bean>
+	    	    
+	    <!-- 
+	    Resolver 리턴되는 앞에  /WEB-INF/views/ 를 붙이고, 뒤에다가 .jsp를 붙입니다. 
+	    그래서 HelloController에서 Hello로만 적어도. /WEB-INF/views/Hello.jsp로 가는 것 
+	    mav.setViewName("Hello");
+	    -->
+		
+
+</beans>

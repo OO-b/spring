@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 	   Spring Was처럼 자신만의 '컨테이너(스프링 전용 메모리 공간)'를 제공( called : IOC )
+	       이 안에 '객체를 만들고, 조립 (관계를 맺게해서 의존성을 줌) 설정 
+	       
+	       > DIConfig.xml 문서를 read해서 안에있는 코드를 먼저 실행 
+	       > xml 파일은 컨테이너를 구성하는 객체를 생성하고, 의존을 설정하는 파일 
+	       
+	         -  xml 파일은 프로그래밍 시작되면 제일먼저 읽어짐 . 컨테이너가 만들어지면 객체를 컨테이너 위에 올려놓아야하는데, 그 안에 관계는 xml이 함. 즉 관계의 근거가 됨 ( like 환경설정 파일)
+	             
+	                    또는  Annotation 통해서 컨테이너 자원 구성
+	                    
+	        : 제어의 역전 ( 프로그램의 제어구조를 바꾼다.)
+	        : 작은 단위의 부품을 만들어 놓고, 그것을 조립하는 행위 (레고블럭 만드는것 처럼)
+	        
+	    
+		ProtocolHandlerFactory factory = new ProtocolHandlerFactory(); 
+		Map<String,ProtocolHandler> map = new HashMap<String,ProtocolHandler>(); - 내가 정의한 클래스가 아님, 그리고 주입된 자원으로 들어감 
+		map.put("rss", new RssHandler()); 
+		map.put("rest", new RestHandler()); 
+		factory.setHandlers(map); 
+		
+		하나는 밖에서 하나는 안에서 만들어볼게요. -->
+	<bean id="rssHandler" class="DI_09_Spring.RssHandler"></bean>
+	<bean id="protocolHandlerFactory" class="DI_09_Spring.ProtocolHandlerFactory">
+		<property name="handlers"> <!--name 자리는 : 세터를 구현하고있는 멤버필드명 -->
+			<map>
+				<entry>
+				<!--밖에서  new하는 것  -->
+					<key>
+						<value>rss</value>
+					</key>
+					<ref bean="rssHandler"></ref>
+				</entry>
+
+				<entry>
+					<key>
+						<value>rest</value>
+					</key>
+					<!-- 여기서 new하는 것  -->
+					<bean class="DI_09_Spring.RestHandler"></bean>
+				</entry>
+			</map>
+		</property>
+
+	</bean>
+</beans>

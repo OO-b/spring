@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Vue.js</title>
+<link href="main.css" rel="stylesheet">
+<style>
+.v-enter-active, .v-leave-active {
+	transition: opacity ls;
+}
+/*opacity : 0에서 1까지 페이드인 & 페이드아웃 하기 */
+.v-enter, .v-leave-to {
+	opacity:1;
+}
+</style>
+</head>
+<body>
+	<div id="app">
+<p>{{count}}번 클릭했습니다.</p>
+<button v-on:click="increment">카운트하기</button>
+		
+	</div>
+	<script src="http://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--  
+	   Spring Was처럼 자신만의 '컨테이너(스프링 전용 메모리 공간)'를 제공( called : IOC )
+	       이 안에 '객체를 만들고, 조립 (관계를 맺게해서 의존성을 줌) 설정 
+	       
+	       > DIConfig.xml 문서를 read해서 안에있는 코드를 먼저 실행 
+	       > xml 파일은 컨테이너를 구성하는 객체를 생성하고, 의존을 설정하는 파일 
+	       
+	         -  xml 파일은 프로그래밍 시작되면 제일먼저 읽어짐 . 컨테이너가 만들어지면 객체를 컨테이너 위에 올려놓아야하는데, 그 안에 관계는 xml이 함. 즉 관계의 근거가 됨 ( like 환경설정 파일)
+	             
+	                    또는  Annotation 통해서 컨테이너 자원 구성
+	                    
+	        : 제어의 역전 ( 프로그램의 제어구조를 바꾼다.)
+	        : 작은 단위의 부품을 만들어 놓고, 그것을 조립하는 행위 (레고블럭 만드는것 처럼)
+	        
+	        
+
+	        MessageBeanImpl messagebean = new MessageBeanImpl("hong");  >> 생성자
+	        messagebean.setGreeting("hello");  >> setter
+	           
+	        //main 
+	        messagebean.sayHello()
+	        
+	        >>>>> 이 두가지 작업을 문법적으로 어떻게 할지 봅시다.
+
+
+			DI 문법 )
+			<bean id="한개의 이름(식별자)" name="여러개의 이름 적는것 가능 >> 구분자 (,) (공백) (;) "
+	        ex) <bean id="", class="" , name="m1,m2 m3; m4"> 
+	               이 객체의 이름은 m1, m2, m3, m4 모두 가능 
+	               
+	               
+	       **정리 
+	       xml파일에서 객체를 생성하고,필요한 객체를 주입 >> 목적
+	               주입방법 :
+	        1.생성자 주입 : (의무적으로 사용할때 반드시 사용하는 경우)  <constructor-arg>
+	        2. setter 주입  : (필요에 따라 선택적으로 사용하는 경우) <property name>   - property의 name은 setter함수를 구현하는 멤버필드의 이름을 쓴다.
+-->
+
+<bean id="messagebean" name="m1,m2 m3;m4" class="DI_04_Spring.MessageBeanImpl"> <!-- 객체 하나 만들어짐. but hong이라는 파라미터 넣어줘야함 -->
+<!-- 방법은 2가지 
+ 	<constructor-arg>
+		<value>hong</value>
+	</constructor-arg> -->
+	<constructor-arg value="hong" />
+	<!-- bean이 setter를 호출하기위한것 - property -->
+		
+	<!-- setGreeting을 구현하는 memberfield 이름을 사용 **** -->
+	<property name="greeting" value="hello" />
+<!-- 	<property name="greeting">
+		<value>hello</value>
+		</property> -->
+</bean>
+</beans>

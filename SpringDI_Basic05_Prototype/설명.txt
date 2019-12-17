@@ -1,0 +1,2 @@
+<bean id="client" class="Spring.Client" scope="prototype">   
+//scope="prototype" : getBean할때마다 객체가 만들어짐  

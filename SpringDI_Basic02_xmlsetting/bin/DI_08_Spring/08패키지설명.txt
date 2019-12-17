@@ -1,0 +1,20 @@
+//xml파일은 모든걸 문자로 인식하는데 어떻게 인식할지 보기 위함 
+String, int, long 일때 
+
+
+다양한 타입이 있을때
+
+	public JobExecute(String first, int second) {
+		System.out.println("String, int 파라미터로 받는 함수 ");
+	}
+	
+	public JobExecute(int first, long second) {
+		System.out.println("int, long 파라미터로 받는 함수 ");
+	}
+	
+	public JobExecute(String first, String second) {
+		System.out.println("String, String 파라미터로 받는 함수 ");
+	}
+	
+	를 호출하려면 어떻게 해야하는지 
+	

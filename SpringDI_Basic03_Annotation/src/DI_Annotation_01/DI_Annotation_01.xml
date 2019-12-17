@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context.xsd">
+<!--  
+Spring 자신만의 [컨테이너(Spring 전용 메모리 공간)] 제공 (IOC) 안에 
+[객체를 만들고 조립(관계...의존성)] 설정
+
+>>DIConfig.xml 문서를  read 해서 ....안에 있는 코드 먼저 실행
+>>xml 파일 은 컨테이너를 구성하는 객체를 생성하고 의존을 설정하는 파일
+또는  Annotation 통해서 컨테이너 자원 구성
+
+:제어의 역전 (프로그램의 제어구조를 바꾼다)
+:작은 단위의 부품을 만들어 놓고 그 것을 조립하는 행위 (레고 블럭 처럼)
+
+//java코드
+MonitorViewer viewer = new MonitorViewer();
+Recorder recorder = new Recorder();
+viewer.setRecorder(recorder);
+
+
+-->
+	<!-- 1단계 xml 설정 -->
+	<!--  
+	<bean id="recorder" class="DI_Annotation_01.Recorder"></bean>
+	<bean id="viewer" class="DI_Annotation_01.MonitorViewer">
+		<property name="recorder">
+			<ref bean="recorder" />
+		</property>
+	</bean> 
+	-->
+	<!--  2단계 Annotation  기반으로  DI 작업
+	@Autowired > By Type기반 (자동 주입)
+	목적 : 의존관계를 자동설정할 때 사용하며 [타입을 이용]하여 의존하는 객체를 삽입해 준다. 
+                   그러므로 (IOC Container) 해당 타입의 빈객체가 존재하지 않거나 또는 2개 이상 존재할 경우 
+		   스프링은 예외를 발생시키게 된다.
+		 
+	설정 위치 : 생성자, 필드, 메소드(굳이 setter메소드가 아니여도 된다)	 
+	
+	**@Autowired  적용되기 위한 선행 작업
+	  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
+	  <bean id="" class=" org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
+	  AutowiredAnnotationBeanPostProcessor 클래스가 bean객체로 등록(그래야 컨테이너에서 사용 가능)
+	   있어야 ... @Autowired 사용가능
+	  
+	   But !!!! 
+        Autowired 가 아닌 다른것도 올리려면 하나하나 다 올려줘야함 
+ 
+           그래서  <context:annotation-config />   ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+	  Annotation 사용에 필요한 모든 클래스 한방에 bean객체 로 생성
+	  (bean객체를 미리 한번에 등록시켜놓는 역할을 함) 
+	   단점) 사용하는 않는 bean 도 자동 등록
+	  @Autowired 그냥 사용 ...
+	  
+	  
+	<bean id="recorder" class="DI_Annotation_01.Recorder"></bean>
+	<bean id="viewer" class="DI_Annotation_01.MonitorViewer">
+		아래 부분을 @Autowired 구현 (Injection)
+		<property name="recorder">
+			<ref bean="recorder" />
+		</property>
+	</bean> 
+	
+	** @Autowired 정상 동작하지 않는 경우 
+	1. injection 되는 타입의 bean객체가 IOC container안에 없는 경우 (예외가 발생함 Exception)
+	2. IOC Container안에 같은 타입의 bean객체가 여러개 존재할 경우
+	
+	 	<bean id="a" class="DI_Annotation_01.Recorder"></bean>
+ 	    <bean id="b" class="DI_Annotation_01.Recorder"></bean>
+ 	    <bean id="c" class="DI_Annotation_01.Recorder"></bean> 
+	
+	3. IOC Container안에 같은 타입의 bean객체가 존재 하더라도 
+		private Recorder recorder;
+		public void setRecorder(Recorder recorder){}
+		setter 함수의 parameter이름이 bean element의 id랑 같으면 찾습니다.
+		
+		원칙적인 방법은 이런경우엔, @Resource를 쓰는게 맞음. 
+		@Resource(by name)
+		
+		autowired는 컨테이너 안에 같은 타입을 찾는거,
+		resource는 컨테이너 안에서 같은 이름을 찾는 것 
+		
+
+	-->
+	<context:annotation-config />
+ 	<bean id="recorder" class="DI_Annotation_01.Recorder"></bean>
+ 	<bean id="viewer" class="DI_Annotation_01.MonitorViewer"></bean>
+ 	<bean id="a" class="DI_Annotation_01.Recorder"></bean>
+ 	<bean id="b" class="DI_Annotation_01.Recorder"></bean>
+ 	<bean id="c" class="DI_Annotation_01.Recorder"></bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+

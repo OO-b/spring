@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SpringMVC Annotation 적용하기</title>
+</head>
+<body>
+	<h3>TEST_1</h3>
+	<a href="hello.do">hello.do</a>
+	<!-- http://localhost:8090/SpringMVC_Basic03_Annotation/hello.do  -->
+
+	<h3>TEST_2 : http전송 : Form : method : GET,POST(비동기는 delete,put도 추가됨)</h3>  <!-- get방식은 주로 화면단이 필요할때.(회원가입할거야. 로그인할거야) -->
+	게시판 목록 페이지 링크(글쓰기)<br>
+	<a href="article/newArticle.do">글쓰기(newArticle.do)</a>
+
+	<h3>TEST_3 : http전송 : Form : method : GET,POST (List 컬렉션 처리)</h3>
+	<a href="order/order.do">주문하기 화면(order.do)</a>
+	
+	<h3>TEST_4 : parameter 다루기 @RequestParam</h3> <!-- 꼭 dto로 받을 필요가 없는 것들 /@RequestParam -디폴트값or 반드시와야하는걸 정의할 수 잇음-->
+	<!-- 3가지 테스트방법 -->
+	Default : <a href="search/external.do">external.do</a><br>
+	Default2 : <a href="search/external.do?query=100">external.do</a><br>
+	Default3 : <a href="search/external.do?p=200">external.do</a><br>
+
+	<h3>TEST_5 : (spring 에서 cookie 사용하기)</h3>
+	<a href="cookie/make.do">make.do(쿠키 만들기)</a><br>
+	<a href="cookie/view.do">view.do(쿠키 읽기)</a>
+	
+	<hr>
+	<h3>TEST_6  CommonsMultipartFile DTO 파일 업로드</h3>
+	<a href="image/upload.do">image  파일 업로드</a>
+	<br>
+	C:\FrontAndBackAnd\Spring\Spring_Labs\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringMVC_Basic03_Annotation\upload
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:context="http://www.springframework.org/schema/context"    
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context.xsd">
+	   
+	   <!-- 
+	   xmlns 는 default / context사용하고싶으면 접두어 context를 붙여라 
+	   xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:context="http://www.springframework.org/schema/beans/context"   
+	   xsd : 스키마 파일  
+	   http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	    -->
+
+	<!-- 	   Spring Was처럼 자신만의 '컨테이너(스프링 전용 메모리 공간)'를 제공( called : IOC )
+	       이 안에 '객체를 만들고, 조립 (관계를 맺게해서 의존성을 줌) 설정 
+	       
+	       > DIConfig.xml 문서를 read해서 안에있는 코드를 먼저 실행 
+	       > xml 파일은 컨테이너를 구성하는 객체를 생성하고, 의존을 설정하는 파일 
+	       
+	         -  xml 파일은 프로그래밍 시작되면 제일먼저 읽어짐 . 컨테이너가 만들어지면 객체를 컨테이너 위에 올려놓아야하는데, 그 안에 관계는 xml이 함. 즉 관계의 근거가 됨 ( like 환경설정 파일)
+	             
+	                    또는  Annotation 통해서 컨테이너 자원 구성
+	                    
+	        : 제어의 역전 ( 프로그램의 제어구조를 바꾼다.)
+	        : 작은 단위의 부품을 만들어 놓고, 그것을 조립하는 행위 (레고블럭 만드는것 처럼)
+
+
+
+	1. DataSourceFactory bean객체로 하나 생성
+	2. jdbc.properties 파일을 read해서 읽은 값을 DataSourceFactory의 setter함수에 injection 할거예요.
+	
+	Key Point 
+	xml 설정 파일에서 특정[파일]을 read 하려면 Spring이 제공하는 Context 자원을 사용해야 한다. 
+	
+	추가적으로 문법적인 정의도 필요하다.(문법적인 강제사항)
+	http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    
+    context라는 접두어를 사용해서 element를 사용할 수 있음 
+	   -->
+	   
+	   <!-- 패키지명은 "." 을쓰지만 / 경로는" /" 사용합니다 -->
+	  <!-- context:property-placeholde : 위치를 찾는 element -->
+<context:property-placeholder location="classpath:DI_11_Spring/jdbc.properties" />
+   <bean id="dataSourceFactory" class="DI_11_Spring.DataSourceFactory">
+      <property name="jdbcDriver" value="${jdbc.driver}"></property>
+      <property name="jdbcUrl" value="${jdbc.url}"></property>
+      <property name="username" value="${jdbc.username}"></property>
+      <property name="password" value="${jdbc.password}"></property>
+   </bean>
+</beans>
+
+
+	<!-- value에다가 properties의 key값을 적음  -->

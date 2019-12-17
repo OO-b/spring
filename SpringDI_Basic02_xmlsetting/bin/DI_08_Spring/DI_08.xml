@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--  
+	   Spring Was처럼 자신만의 '컨테이너(스프링 전용 메모리 공간)'를 제공( called : IOC )
+	       이 안에 '객체를 만들고, 조립 (관계를 맺게해서 의존성을 줌) 설정 
+	       
+	       > DIConfig.xml 문서를 read해서 안에있는 코드를 먼저 실행 
+	       > xml 파일은 컨테이너를 구성하는 객체를 생성하고, 의존을 설정하는 파일 
+	       
+	         -  xml 파일은 프로그래밍 시작되면 제일먼저 읽어짐 . 컨테이너가 만들어지면 객체를 컨테이너 위에 올려놓아야하는데, 그 안에 관계는 xml이 함. 즉 관계의 근거가 됨 ( like 환경설정 파일)
+	             
+	                    또는  Annotation 통해서 컨테이너 자원 구성
+	                    
+	        : 제어의 역전 ( 프로그램의 제어구조를 바꾼다.)
+	        : 작은 단위의 부품을 만들어 놓고, 그것을 조립하는 행위 (레고블럭 만드는것 처럼)
+	        
+	   
+	   
+	   	JobExecute jobexecute = new JobExecute("hong", 100);  
+		JobExecute jobexecute1 = new JobExecute("hong", 100L);
+		JobExecute jobexecute2 = new JobExecute("hong", "kim");
+
+		ArticleDao articledao = new ArticleDao();
+		jobexecute.setArticledao(articledao);  //setter 참조값 
+		
+		jobexecute.setData(500);//setter 주입값 
+		 
+-->
+	<bean id="articleDao" class="DI_08_Spring.ArticleDao"></bean>
+	<bean id="jobexecute" class="DI_08_Spring.JobExecute">
+		<constructor-arg><value>hong</value></constructor-arg>
+		<constructor-arg><value type="long">100</value></constructor-arg> 
+		<!-- <constructor-arg><value type="int">100</value></constructor-arg> -->
+<!-- 	//String, String 파라미터로 받는 함수  (web처럼 들어오는걸 다 문자로 인식해요!!!!!!!!!!)
+
+		<constructor-arg><value>hong</value></constructor-arg>
+		<constructor-arg><value>100</value></constructor-arg> 
+
+		** 타입을 명시하지 않는 모든 값은 문자열 (문자열은 타입을 명시하지 않음- 명시하면 에러남)
+-->
+
+		<property name="articledao">
+			<ref bean="articleDao"/>
+		</property>
+
+		<property name="data">
+			<value>400</value>
+		</property>
+	</bean>
+</beans>

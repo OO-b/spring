@@ -1,0 +1,9 @@
+SpringMVC_Basic08_WebSite_Annotation_JdbcTemplate_Tiles
+
+Basic07에 tiles 적용시켜보는 것 
+
+===========================================================
+
+Tiles는 view단을 보여주는과정에서
+개발자 입장에서 관리하기 편하게, 유지보수 편하게 하기 위해서 
+작업하는 것 

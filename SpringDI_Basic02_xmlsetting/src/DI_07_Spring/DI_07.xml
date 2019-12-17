@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--  
+	   Spring Was처럼 자신만의 '컨테이너(스프링 전용 메모리 공간)'를 제공( called : IOC )
+	       이 안에 '객체를 만들고, 조립 (관계를 맺게해서 의존성을 줌) 설정 
+	       
+	       > DIConfig.xml 문서를 read해서 안에있는 코드를 먼저 실행 
+	       > xml 파일은 컨테이너를 구성하는 객체를 생성하고, 의존을 설정하는 파일 
+	       
+	         -  xml 파일은 프로그래밍 시작되면 제일먼저 읽어짐 . 컨테이너가 만들어지면 객체를 컨테이너 위에 올려놓아야하는데, 그 안에 관계는 xml이 함. 즉 관계의 근거가 됨 ( like 환경설정 파일)
+	             
+	                    또는  Annotation 통해서 컨테이너 자원 구성
+	                    
+	        : 제어의 역전 ( 프로그램의 제어구조를 바꾼다.)
+	        : 작은 단위의 부품을 만들어 놓고, 그것을 조립하는 행위 (레고블럭 만드는것 처럼)
+	        
+		ProtocolHandler handler = new ProtocolHandler();
+		
+		List<MyFilter> list = new ArrayList<MyFilter>();
+		list.add(new EncFilter());
+		list.add(new HeaderFilter());
+		list.add(new ZipFilter());
+		
+		handler.setFilters(list);// List 주입 (setter)
+		
+		Chapter 1.
+		필요한 Bean은 모두 생성해라. (new 자원 Bean 생성)
+		사용자가 직접 설계하지 않은 클래스 (Java API가 제공하는 클래스 - 주로 Collection)
+		Bean 생성 
+		
+		xml에서 아래 세가지 요소 제공 
+		<list>, <map>, <set>
+-->
+<!--
+	<bean id="encFilter" class="DI_07_Spring.EncFilter"></bean>
+	<bean id="headerFilter" class="DI_07_Spring.HeaderFilter"></bean>
+	<bean id="zipFilter" class="DI_07_Spring.ZipFilter"></bean>
+	<bean id="protocolHandler" class="DI_07_Spring.ProtocolHandler">
+		<property name="filters">   
+			<list>  list = arraylist랑 같은것. / id속성은 사용하지 않음 **
+				<ref bean="encFilter"/>
+				<ref bean="headerFilter"/>
+				<ref bean="zipFilter"/>
+			</list>  
+			</property>
+	</bean> -->
+
+
+<!--  위에서는 각각을 NEW하지 않고, 했었는데 재사용도 안하고.. 컬렉션안에서 NEW했었는데..
+		list.add(new EncFilter());
+		list.add(new HeaderFilter());
+		list.add(new ZipFilter()); 
+		
+		즉, 이건 안에서 new하는 것 -->
+		
+	
+	<bean id="protocolHandler" class="DI_07_Spring.ProtocolHandler">
+		<property name="filters">   
+			<list>  <!-- 여기서는 id속성을 쓸 이유가 없어요. 다른데서 참조할게 아니라서요.  -->
+				<bean class="DI_07_Spring.EncFilter"></bean>
+				<bean class="DI_07_Spring.HeaderFilter"></bean>
+				<bean class="DI_07_Spring.ZipFilter"></bean>
+			</list>  
+			</property>
+	</bean>
+	
+</beans>
